@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VICTOR STARK | V.01</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --miel: #FFC436; --blanco: #F5F7F8; --gris: #7D7C7C; --negro: #000;
+            --font-p: 'Archivo Black', sans-serif; --font-s: 'Space Mono', monospace;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #121212; color: var(--blanco); font-family: -apple-system, sans-serif; display: flex; justify-content: center; }
+
+        .app-shell { width: 100%; max-width: 420px; background: var(--negro); min-height: 100vh; position: relative; border: 1px solid #222; }
+
+        /* HEADER */
+        .top-nav { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; font-weight: bold; }
+
+        /* PROFILE */
+        .profile-section { padding: 15px; }
+        .p-main { display: flex; align-items: center; gap: 25px; margin-bottom: 15px; }
+        .p-pic-ring { width: 85px; height: 85px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, var(--miel), #444); cursor: pointer; }
+        .p-pic { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #000; object-fit: cover; background: #222; }
+        .stats { display: flex; flex-grow: 1; justify-content: space-around; text-align: center; font-size: 14px; }
+        
+        .bio { font-size: 13px; line-height: 1.5; }
+        .bio b { font-family: var(--font-p); font-size: 15px; display: block; }
+        .bio p { font-family: var(--font-s); color: var(--gris); font-size: 11px; }
+        .bio span { color: var(--miel); }
+
+        /* HIGHLIGHTS */
+        .highlights { display: flex; gap: 15px; padding: 10px 15px; overflow-x: auto; scrollbar-width: none; }
+        .h-item { text-align: center; font-size: 10px; cursor: pointer; }
+        .h-circle { width: 60px; height: 60px; border-radius: 50%; background: #1a1a1a; border: 1px solid #333; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .h-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* TABS */
+        .tabs { display: flex; border-top: 1px solid #1a1a1a; margin-top: 10px; }
+        .tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; color: var(--gris); transition: 0.3s; }
+        .tab.active { color: var(--blanco); border-bottom: 2px solid var(--blanco); }
+
+        /* GRID */
+        .feed { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+        .feed-item { aspect-ratio: 1/1; background: #0f0f0f; cursor: pointer; overflow: hidden; }
+        .feed-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
+        .feed-item:hover img { opacity: 1; }
+
+        /* VIEWER (MODALES) */
+        .viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: none; flex-direction: column; }
+        .progress-bar { width: 95%; height: 2px; background: #333; margin: 10px auto; border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--miel); width: 0%; }
+        .viewer-content { flex-grow: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+        .viewer-content img { max-width: 100%; max-height: 80vh; border-radius: 8px; }
+        .close-v { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: var(--miel); z-index: 10000; }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <nav class="top-nav">
+            <span>‹ victor_stark_v01</span>
+            <span style="font-size: 20px;">⋮</span>
+        </nav>
+
+        <section class="profile-section">
+            <div class="p-main">
+                <div class="p-pic-ring" onclick="startStory('historia.png')">
+                    <img src="fperfil.png" class="p-pic">
+                </div>
+                <div class="stats">
+                    <div><b>3</b><p>Posts</p></div>
+                    <div><b>1.2k</b><p>Followers</p></div>
+                    <div><b>1</b><p>Following</p></div>
+                </div>
+            </div>
+            <div class="bio">
+                <b>VICTOR STARK</b>
+                <p>CONCEPT V.01 // LA CUMBRE</p>
+                TRAZA • <span>MOVIMIENTO</span> • VISIÓN
+            </div>
+        </section>
+
+        <div class="highlights">
+            <div class="h-item" onclick="startStory('Race.png')"><div class="h-circle"><img src="Race.png"></div>RACE</div>
+            <div class="h-item" onclick="startStory('Dance.png')"><div class="h-circle"><img src="Dance.png"></div>DANCE</div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="setTab(this)">▦</div>
+            <div class="tab" onclick="setTab(this)">🎬</div>
+        </div>
+
+        <div class="feed">
+            <div class="feed-item" onclick="showPost('post.png', 'V.01: MOTO // CAFE RACER 250')"><img src="Post.png"></div>
+            <div class="feed-item" onclick="showPost('historia.png', 'MOVIMIENTO: POPPING // GLITCH')"><img src="Historia.png"></div>
+            <div class="feed-item" onclick="showPost('Piezalibre.png', 'VISIÓN: INTELECTO FRÍO')"><img src="Piezalibre.png"></div>
+        </div>
+    </div>
+
+    <!-- VISOR DE HISTORIAS Y POSTS -->
+    <div id="mainViewer" class="viewer">
+        <span class="close-v" onclick="closeViewer()">&times;</span>
+        <div id="pBar" class="progress-bar"><div id="pFill" class="progress-fill"></div></div>
+        <div class="viewer-content">
+            <img id="vImg" src="">
+            <p id="vCaption" style="position:absolute; bottom:20px; font-family:var(--font-s); font-size:12px; text-align:center; width:100%"></p>
+        </div>
+    </div>
+
+    <script>
+        const viewer = document.getElementById('mainViewer');
+        const vImg = document.getElementById('vImg');
+        const pFill = document.getElementById('pFill');
+        const vCaption = document.getElementById('vCaption');
+        let timer;
+
+        function startStory(src) {
+            viewer.style.display = 'flex';
+            document.getElementById('pBar').style.display = 'block';
+            vImg.src = src;
+            vCaption.innerText = "";
+            pFill.style.width = '0%';
+            
+            setTimeout(() => { pFill.style.transition = 'width 3s linear'; pFill.style.width = '100%'; }, 50);
+            timer = setTimeout(closeViewer, 3050);
+        }
+
+        function showPost(src, caption) {
+            viewer.style.display = 'flex';
+            document.getElementById('pBar').style.display = 'none';
+            vImg.src = src;
+            vCaption.innerText = caption;
+        }
+
+        function closeViewer() {
+            viewer.style.display = 'none';
+            pFill.style.transition = 'none';
+            pFill.style.width = '0%';
+            clearTimeout(timer);
+        }
+
+        function setTab(el) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+    </script>
+</body>
+</html>
